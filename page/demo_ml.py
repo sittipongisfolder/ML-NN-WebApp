@@ -4,8 +4,9 @@ import joblib
 import numpy as np
 import catboost
 import os
+from catboost import CatBoostClassifier
 
-# โหลดโมเดลที่บันทึกไว้
+
 @st.cache_resource
 def load_model():
     model_path = "models/catboost_model.cbm"
@@ -14,9 +15,12 @@ def load_model():
         st.error(f"🚨 ไม่พบไฟล์โมเดล: {model_path}")
         return None
     
-    return joblib.load(model_path)
+    model = CatBoostClassifier()
+    model.load_model(model_path, format="cbm")  # โหลดโมเดลโดยตรงจากไฟล์ .cbm
+    return model
 
 model = load_model()
+
 # Mapping Class Number -> ชื่อสัตว์
 class_mapping = {
     1: "สัตว์เลี้ยงลูกด้วยนม (Mammal)",
