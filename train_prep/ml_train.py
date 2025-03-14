@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from catboost import CatBoostClassifier
 import joblib
-
+import catboost
 # ----------------- โหลดข้อมูล ----------------- #
 file_path = "zoo.csv"  # เปลี่ยนเป็นพาธไฟล์ที่ถูกต้อง
 df = pd.read_csv(file_path)

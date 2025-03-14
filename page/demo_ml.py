@@ -2,14 +2,21 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
+import catboost
+import os
 
 # โหลดโมเดลที่บันทึกไว้
 @st.cache_resource
 def load_model():
-    return joblib.load("models/catboost_model.cbm")
+    model_path = "models/catboost_model.cbm"
+    
+    if not os.path.exists(model_path):
+        st.error(f"🚨 ไม่พบไฟล์โมเดล: {model_path}")
+        return None
+    
+    return joblib.load(model_path)
 
 model = load_model()
-
 # Mapping Class Number -> ชื่อสัตว์
 class_mapping = {
     1: "สัตว์เลี้ยงลูกด้วยนม (Mammal)",
