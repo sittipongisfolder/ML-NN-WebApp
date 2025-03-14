@@ -73,13 +73,17 @@ input_df = pd.DataFrame([input_data], columns=features.keys())
 
 # ปุ่ม Predict ให้ดูชัดเจนขึ้น
 st.markdown("<br>", unsafe_allow_html=True)  # เพิ่มระยะห่าง
-if st.button("🔮 ทำนายประเภทของสัตว์"):
-    prediction = model.predict(input_df)
+if model:
+    if st.button("🔮 ทำนายประเภทของสัตว์"):
+        prediction = model.predict(input_df)
 
-    # ✅ ใช้ item() เพื่อแปลงเป็น int
-    class_id = int(prediction.item()) if isinstance(prediction, np.ndarray) else int(prediction)
-    
-    # ดึงชื่อสัตว์จาก class_mapping
-    animal_class = class_mapping.get(class_id, "ประเภทไม่ทราบ")
-    
-    st.success(f"🎯 สัตว์ที่คาดการณ์ได้: **{animal_class}**")
+        # ✅ ใช้ item() เพื่อแปลงเป็น int
+        if isinstance(prediction, (np.ndarray, list)):
+            class_id = int(prediction[0])
+        else:
+            class_id = int(prediction)
+
+        # ดึงชื่อสัตว์จาก class_mapping
+        animal_class = class_mapping.get(class_id, "ประเภทไม่ทราบ")
+        
+        st.success(f"🎯 สัตว์ที่คาดการณ์ได้: **{animal_class}**")
