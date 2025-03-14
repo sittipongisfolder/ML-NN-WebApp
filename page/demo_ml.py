@@ -9,7 +9,7 @@ from catboost import CatBoostClassifier
 
 @st.cache_resource
 def load_model():
-    model_path = "../models/catboost_model.cbm"
+    model_path = "/models/catboost_model.cbm"
     
     if not os.path.exists(model_path):
         st.error(f"🚨 ไม่พบไฟล์โมเดล: {model_path}")
