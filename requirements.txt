@@ -9,4 +9,4 @@ tensorboard==2.19.0
 keras
 matplotlib
 pickle-mixin
-catboost==1.1.1
+catboost==1.2.7
