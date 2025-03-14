@@ -7,16 +7,22 @@ import os
 from catboost import CatBoostClassifier
 
 
+# โหลดโมเดลที่บันทึกไว้
 @st.cache_resource
 def load_model():
     model_path = "models/catboost_model.cbm"
+    
     if not os.path.exists(model_path):
         st.error(f"🚨 ไม่พบไฟล์โมเดล: {model_path}")
         return None
 
-    model = CatBoostClassifier()
-    model.load_model(model_path, format="cbm")
-    return model
+    try:
+        model = catboost.CatBoostClassifier()
+        model.load_model(model_path)  # ใช้ฟังก์ชัน CatBoost โดยตรง
+        return model
+    except Exception as e:
+        st.error(f"❌ โหลดโมเดลล้มเหลว: {str(e)}")
+        return None
 
 model = load_model()
 
